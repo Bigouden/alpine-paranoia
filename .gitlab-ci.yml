@@ -1,0 +1,37 @@
+---
+include:
+  - project: "Bigouden/gitlab-ci-templates"
+    file: ".gitlab-ci-docker.yml"
+
+.standalone:
+  image:
+    name: $CONTAINER_TEST_IMAGE
+    entrypoint: [""]
+  variables:
+    GIT_STRATEGY: none
+  dependencies: []
+
+variables:
+  HADOLINT_ALLOW_FAILURE: "true"
+
+stages:
+  - Quality
+  - Security
+  - Build
+  - Commands
+  - Inspect
+  - Release
+  - Clean
+
+Docker:
+  stage: Commands
+  extends: .standalone
+  script:
+    - docker -v
+
+Paranoia:
+  stage: Commands
+  extends: .standalone
+  before_script:
+  script:
+    - paranoia -h
