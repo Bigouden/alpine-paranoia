@@ -40,7 +40,7 @@ RUN --mount=type=bind,from=builder,source=/usr/bin/envsubst,target=/usr/bin/envs
     --mount=type=cache,id=apk_cache,target=/var/cache/apk \
     apk --update add `envsubst < /tmp/apk_packages` \
     && useradd -l -u "${UID}" -U -s /bin/sh -m "${USERNAME}"
-HEALTHCHECK CMD curl -s -f -H "Authorization: Bearer ${BIVAC_SERVER_PSK}" http://127.0.0.1:8182/ping # nosemgrep
 USER ${USERNAME}
+HEALTHCHECK CMD paranoia -h || exit 1
 WORKDIR /home/${USERNAME}
-ENTRYPOINT ["cat"]
+ENTRYPOINT ["/bin/sh", "-c", "sleep infinity"]
