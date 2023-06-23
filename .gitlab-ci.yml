@@ -32,6 +32,5 @@ Docker:
 Paranoia:
   stage: Commands
   extends: .standalone
-  before_script:
   script:
     - paranoia -h
