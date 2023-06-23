@@ -23,13 +23,13 @@ stages:
   - Release
   - Clean
 
-Docker:
+Docker CLI:
   stage: Commands
   extends: .standalone
   script:
     - docker -v
 
-Paranoia:
+Paranoia CLI:
   stage: Commands
   extends: .standalone
   script:
