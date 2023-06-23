@@ -29,7 +29,7 @@ Docker:
   script:
     - docker -v
 
-Paranoia:
+Paranoia CLI:
   stage: Commands
   extends: .standalone
   before_script:
