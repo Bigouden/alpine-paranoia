@@ -10,7 +10,7 @@ COPY --link apk_packages /tmp/
 RUN --mount=type=cache,id=builder_apk_cache,target=/var/cache/apk \
     apk add gettext-envsubst
 
-FROM golang:alpine as gobuilder
+FROM golang:alpine AS gobuilder
 ENV PARANOIA_REPOSITORY="https://github.com/jetstack/paranoia.git"
 ENV PARANOIA_VERSION="v0.2.1"
 ENV PARANOIA_BUILD_DIR="/go/src/github.com/jetstack/paranoia"
