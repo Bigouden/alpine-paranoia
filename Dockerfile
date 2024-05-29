@@ -18,6 +18,13 @@ ENV PARANOIA_PKG="paranoia"
 ENV GOOS="linux"
 ENV GOARCH="amd64"
 ENV CGO_ENABLED="0" 
+ENV USERNAME="paranoia"
+ENV UID="1000"
+
+# hadolint ignore=DL3018
+RUN --mount=type=cache,id=gobuilder_apk_cache,target=/var/cache/apk \
+    apk add shadow \
+    && useradd -l -u "${UID}" -U -s /bin/sh -m "${USERNAME}"
 
 # PARANOIA
 # checkov:skip=CKV_DOCKER_4
@@ -26,7 +33,7 @@ WORKDIR ${PARANOIA_BUILD_DIR}
 RUN go get ./... \
     && go build -o "${PARANOIA_PKG}" \
                 -a -ldflags="-installsuffix cgo"
-RUN chmod 4755 "${PARANOIA_PKG}"
+RUN chown "${USERNAME}":"${USERNAME}" "${PARANOIA_PKG}"
 
 FROM alpine:${ALPINE_VERSION}
 LABEL maintainer="Thomas GUIRRIEC <thomas@guirriec.fr>"
